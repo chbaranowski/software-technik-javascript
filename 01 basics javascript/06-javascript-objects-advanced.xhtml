@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Java Script Objects</title>
+
+    <script type="text/javascript">
+
+        var logger = getConsole();
+
+        var createStack = function(properties) {
+
+            /* private properties */
+            if (properties == undefined) {
+                properties = {
+                    maxSize: 10,
+                    elements: []
+                };
+            }
+
+            /* private methods */
+            var throwStackOverflowException = function() {
+                throw {
+                    name: 'StackOverflowException',
+                    message: 'The stack is full.'
+                };
+            };
+
+            var that = {};
+
+            that.push = function(item) {
+                if (properties.elements.length + 1 > properties.maxSize) {
+                    throwStackOverflowException();
+                }
+                properties.elements[properties.elements.length] = item;
+            };
+
+            that.pop = function() {
+                return properties.elements.pop();
+            };
+
+            that.size = function() {
+                return properties.elements.length;
+            };
+
+            that.getElements = function() {
+                return properties.elements;
+            };
+
+            that.setMaxSize = function(maxSize) {
+                properties.maxSize = maxSize;
+            };
+
+            that.clone = function() {
+                return createStack(properties);  
+            };
+
+            return that;
+        };
+
+        var stack = createStack();
+        stack.push('Element A');
+        logger.log('The stack size is : ' + stack.size());
+        logger.log('The elements of the stack are : ' + stack.getElements());
+
+        var otherStack = createStack();
+        otherStack.setMaxSize(0);
+        try {
+            otherStack.push('Element A');
+        } catch(exp) {
+            logger.log('Error ' + exp.message);
+        }
+
+        var clonedStack = stack.clone();
+        logger.log('The stack size is : ' + stack.size());
+        logger.log('The elements of the stack are : ' + stack.getElements());
+        
+        function getConsole() {
+            if (console) {
+                return console;
+            }
+            else {
+                console = {};
+                console.log = function(msg) {
+                    alert(msg);
+                }
+                return console;
+            }
+        }
+
+
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

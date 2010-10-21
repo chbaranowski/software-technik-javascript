@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Java Script Objects</title>
+
+    <script type="text/javascript">
+
+        var logger = getConsole();
+
+        // Define a object stack with two properties
+        var simpleStack = {
+            /* Returns the number of components in this stack. */
+            size: 0,
+            /* The max allowed number of components in this stack. */
+            maxSize: 10
+        }
+
+        // Read the properties
+        logger.log('The stack size is : ' + simpleStack.size);
+        logger.log('The max size of the stack is : ' + simpleStack['maxSize']);
+
+        // Read undefined property
+        logger.log('The elements of the stack are : ' + simpleStack.elements);
+
+        // Define new property to an existing object
+        simpleStack.elements = [];
+
+        // Read undefined property
+        logger.log('The elements of the stack are : ' + simpleStack.elements);
+
+        // Add a push function as property to the stack object
+        simpleStack.push = function(item) {
+            if (this.size + 1 > this.maxSize) {
+                throw {
+                    name: 'StackOverflowException',
+                    message: 'The stack is full.'
+                };
+            }
+            this.elements[this.size++] = item;
+        }
+        simpleStack.push('Element A');
+        simpleStack.push('Element B');
+        logger.log('The stack size is : ' + simpleStack.size);
+        logger.log('The elements of the stack are : ' + simpleStack.elements);
+
+        // Max size exception
+        try {
+            simpleStack.push('Element C');
+            simpleStack.push('Element D');
+            simpleStack.push('Element E');
+            simpleStack.push('Element F');
+            simpleStack.push('Element G');
+            simpleStack.push('Element H');
+            simpleStack.push('Element I');
+            simpleStack.push('Element J');
+            logger.log('The stack size is : ' + simpleStack.size);
+            logger.log('The stack max size is : ' + simpleStack.maxSize);
+            simpleStack.push('Element K');
+        } catch (exp) {
+            logger.log('Error : ' + exp.message);
+        }
+
+        // clone the simple stack object
+        var stack = Object.create(simpleStack);
+        logger.log('The stack size is : ' + stack.size);
+        logger.log('The elements of the stack are : ' + stack.elements);
+        stack.pop = function() {
+            this.size--;
+            return this.elements.pop();
+        }
+        var item = stack.pop();
+        logger.log('Pop returns the item : ' + item);
+        logger.log('The stack size is : ' + stack.size);
+        logger.log('The elements of the stack are : ' + stack.elements);
+
+        // Prototype Stuff
+        simpleStack.minSize = 1;
+        logger.log('The property minSize of the object simpleStack is : ' + simpleStack.minSize);
+        logger.log('The property minSize of the object stack is : ' + stack.minSize);
+
+        stack.removedElements = [];
+        logger.log('The property removedElements of the object simpleStack is : ' + simpleStack.removedElements);
+        logger.log('The property removedElements of the object stack is : ' + stack.removedElements);
+        
+        function getConsole() {
+            if (console) {
+                return console;
+            }
+            else {
+                console = {};
+                console.log = function(msg) {
+                    alert(msg);
+                }
+                return console;
+            }
+        }
+
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

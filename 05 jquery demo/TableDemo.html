@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>JQuery Demo</title>
+
+    <script type="text/javascript" src="javascript/jquery-core.js"/>
+
+    <script type="text/javascript">
+
+        // instead of window.onload = function()
+        $(document).ready(function() {
+
+            // CSS manipulation with JQuery
+            $(document.body).css('background', 'lightgray')
+
+            // select element via CSS class
+            $('.box').css("background", "gray");
+
+            // Select a element via ID
+            $('#hideCustomerFormLink').click(function() {
+                // hides all input fields of the customerForm
+                $(customerForm.elements).hide();
+            });
+     
+
+            // Manipulate the DOM via JQuery
+
+            // create and add elements
+            var contentDiv = $('#content');
+            $('<br>').appendTo(contentDiv);
+            $('<br>').appendTo('#content');
+            $('<a href="#">New Link via JQuery</a>').appendTo('#content');
+            $('<br>').appendTo('#content');
+
+            // create complex elements
+            $("<input>", {
+                type: "button",
+                val: "Test Button Click Me",
+                click: function() {
+                    alert('They have click me!')
+                }
+            }).appendTo('#content');
+
+        });
+
+
+    </script>
+    
+</head>
+<body>
+
+<div class="main-content">
+
+    <!-- Header -->
+    <div class="box">
+        <div class="box-top">
+            <div>&nbsp;</div>
+        </div>
+        <div class="box-content">
+
+            JQuery Sample
+
+        </div>
+        <div class="box-bottom">
+            <div>&nbsp;</div>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="box">
+        <div class="box-top">
+            <div>&nbsp;</div>
+        </div>
+        <div class="box-content" id="content">
+
+            <form id="customerForm" name="customerForm">
+                First Name:
+                <input id="firstNameInputField" type="text">
+            </form>
+
+            <a id="hideCustomerFormLink" href="#">Hide Customer Form</a>
+
+        </div>
+        <div class="box-bottom">
+            <div>&nbsp;</div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

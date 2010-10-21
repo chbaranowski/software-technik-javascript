@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Java Script Objects</title>
+
+    <script type="text/javascript">
+
+        /* <![CDATA[ */
+        
+        var logger = getConsole();
+
+        var stack = {
+            elements: ['First Element', 'Second Element', 'Last Element'],
+            removeElement: function(element){
+                for(var i=0; i < this.elements.length; i++){
+                    if(this.elements[i]==element){
+                        this.elements.splice(i,1);
+                    }
+                }
+            }
+        };
+
+        logger.log('The stack content before remove : ' + stack.elements);
+        stack.removeElement('Last Element');
+        logger.log('The stack content after remove : ' + stack.elements);
+        
+        function getConsole() {
+            if (console) {
+                return console;
+            }
+            else {
+                console = {};
+                console.log = function(msg) {
+                    alert(msg);
+                }
+                return console;
+            }
+        }
+         /* ]]> */
+        
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Java Script Objects</title>
+
+    <script type="text/javascript">
+
+        var logger = getConsole();
+
+        var stack = {
+            size: 10
+        };
+
+        // Function Invocation Pattern
+
+        stack.print = function() {
+
+            // That variable to give the function print helper access to the right this context.
+            var that = this;
+
+            var printHelper = function() {
+                logger.log('The size of the stack is : ' + that.size);
+            };
+
+            printHelper();
+        }
+        stack.print();
+
+
+        // Function Apply Invocation Pattern
+        var greeter = {
+            name: 'Mike',
+            greet: function() {
+                return 'hello ' + this.name;
+            }
+        };
+        logger.log(greeter.greet());
+
+        // invoke greet function on bob object
+        var bob = {
+            name: 'Bob'
+        };
+        logger.log(greeter.greet.apply(bob));
+
+        function getConsole() {
+            if (console) {
+                return console;
+            }
+            else {
+                console = {};
+                console.log = function(msg) {
+                    alert(msg);
+                }
+                return console;
+            }
+        }
+
+
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

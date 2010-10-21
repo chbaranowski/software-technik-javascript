@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Java Script Objects</title>
+
+    <script type="text/javascript">
+
+        var logger = getConsole();
+
+        var stack = {
+
+            size: 1,
+            elements: ['First Element'],
+            push: function(item) {
+                this.elements[this.size++] = item;
+            }
+
+        };
+
+        logger.log('The type of the object stack is : ' + typeof stack);
+        logger.log('The property size of the object stack has type : ' + typeof stack.size);
+        logger.log('The property elements of the object stack has type : ' + typeof stack.elements);
+        logger.log('The type of the first stack element is : ' + typeof stack.elements[0]);
+        logger.log('The property push of the object stack has type : ' + typeof stack.push);
+
+        logger.log('Has object stack a property with name size : ' + stack.hasOwnProperty('size'));
+        logger.log('Has object stack a property with name push : ' + stack.hasOwnProperty('push'));
+        logger.log('Has object stack a property with name minSize : ' + stack.hasOwnProperty('minSize'));
+
+        var propertyName;
+        for (propertyName in stack) {
+            logger.log('Stack has property with name : ' + propertyName);
+            if (typeof stack[propertyName] !== 'function') {
+                logger.log('The value of the property is : ' + stack[propertyName]);
+            } else {
+                logger.log('The property is a function');
+            }
+        }
+
+        function getConsole() {
+            if (console) {
+                return console;
+            }
+            else {
+                console = {};
+                console.log = function(msg) {
+                    alert(msg);
+                }
+                return console;
+            }
+        }
+
+
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

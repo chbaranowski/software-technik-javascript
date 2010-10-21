@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Java Script Objects</title>
+
+    <script type="text/javascript">
+
+        /* <![CDATA[ */
+
+        // Invoke JavaScript after page is load
+        window.onload = function() {
+
+            var logger = getConsole();
+
+            var link = document.getElementById('mySampleLink');
+
+            var onClick = function(event) {
+                logger.log('The link was clicked via JavaScript');
+            }
+
+            // Add a click handler to the link
+            addEvent(link, 'click', onClick);
+
+            // Fire click event
+            fireEvent(link, 'click');
+
+            // Remove nodes from DOM
+            link.removeChild(link.firstChild);
+
+            // Create a new text node
+            var textNode = document.createTextNode('New Link Text Node Data');
+            link.appendChild(textNode);
+
+            // Add image to all divs with the class heading2
+            var headings = [];
+            var divs = document.getElementsByTagName('div');
+            for (var i = 0; i < divs.length; i++) {
+                var div = divs[i];
+                var cssClass = div.getAttribute('class');
+                if (cssClass) {
+                    if (cssClass == 'heading2') {
+                        headings.push(div);
+                    }
+                }
+            }
+            for (var i = 0; i < headings.length; i++) {
+                var heading = headings[i];
+                // Create a new image element
+                var headingImage = document.createElement('img');
+                headingImage.setAttribute('src', 'heading2.jpg');
+                heading.appendChild(headingImage);
+            }
+
+            // Add click handler to save button
+            var saveButton = document.getElementById('saveButton');
+            addEvent(saveButton, 'click', function(event) {
+                // Read the value from the input field
+                var textField = document.getElementById('sampleTextField');
+                var textValue = textField.value;
+                var messages = document.getElementById('messages');
+                var newTextElement = document.createTextNode(textValue);
+                messages.appendChild(newTextElement);
+            });
+
+            // replace text data
+            var firstText = document.getElementById('firstText');
+            var contentLength = firstText.firstChild.nodeValue.length;
+            firstText.firstChild.replaceData(0, contentLength, 'New Text...');
+
+            // get node name
+            logger.log('Name of the save button node : ' + saveButton.nodeName);
+
+            // get node value
+            logger.log('Value of the link node : ' + link.nodeValue);
+            logger.log('Value of the first child of the link node : ' + link.firstChild.nodeValue);
+
+            // Change node value of the link via property
+            link.firstChild.nodeValue = 'New Text';
+
+            // get and set attribute node
+            var colorStyle = link.getAttributeNode('style');
+            firstText.setAttributeNode(colorStyle.cloneNode());
+
+            // remove attribute node
+            firstText.removeAttributeNode(firstText.getAttributeNode('style'));
+
+            function addEvent(obj, type, fn) {
+                if (obj.addEventListener) {
+                    obj.addEventListener(type, fn, false);
+                } else if (obj.attachEvent) {
+                    obj["e" + type + fn] = fn;
+                    obj[type + fn] = function() {
+                        obj["e" + type + fn](window.event);
+                    }
+                    obj.attachEvent("on" + type, obj[type + fn]);
+                }
+            }
+
+            function fireEvent(obj, evt) {
+                var fireOnThis = obj;
+                if (document.createEvent) {
+                    var evObj = document.createEvent('MouseEvents');
+                    evObj.initEvent(evt, true, false);
+                    fireOnThis.dispatchEvent(evObj);
+                } else if (document.createEventObject) {
+                    fireOnThis.fireEvent('on' + evt);
+                }
+            }
+
+            function getConsole() {
+                if (console) {
+                    return console;
+                }
+                else {
+                    console = {};
+                    console.log = function(msg) {
+                        alert(msg);
+                    }
+                    return console;
+                }
+            }
+
+        }
+
+        /* ]]> */
+
+    </script>
+
+</head>
+<body>
+
+    <a style="color: #dc143c;" id="mySampleLink" href="#">Link</a>
+
+    <div class="heading2"/>
+    <p id="firstText">First Text</p>
+
+    <form name="sampleForm" action="">
+        <input id="sampleTextField" type="text" value=""/>
+        <input id="saveButton" type="button" value="Save Button"/>
+    </form>
+
+    <div id="messages"></div>
+
+</body>
+</html>

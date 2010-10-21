@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Kunden Anlegen / Bearbeiten</title>
+
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+    <script type="text/javascript" src="javascript/event.js"></script>
+
+    <script type="text/javascript" src="javascript/utils.js"></script>
+
+    <script type="text/javascript">
+
+
+        window.onload = function() {
+            var model;
+            if (window.name) {
+                model = JSON.parse(window.name);
+            }
+            else {
+                model = [
+                    [1, 'Baranowski', 'Christian'],
+                    [2, 'Tester', 'Christian']
+                ];
+            }
+            ;
+            var parameters = window.location.search;
+            var index = getUrlParam('customerId');
+            var customer;
+            if (index) {
+                customer = model[index];
+            } else {
+                customer = [0, '', ''];
+            }
+
+            var nrInputField = document.getElementById('nrInputField');
+            nrInputField.value = customer[0];
+
+            var firstnameInputField = document.getElementById('firstnameInputField');
+            firstnameInputField.value = customer[1];
+
+            var lastnameInputField = document.getElementById('lastnameInputField');
+            lastnameInputField.value = customer[2];
+
+            var saveButton = document.getElementById('saveButton');
+            addEvent(saveButton, 'click', function(event) {
+                customer[0] = nrInputField.value;
+                customer[1] = firstnameInputField.value;
+                customer[2] = lastnameInputField.value;
+                if(!index){
+                    model.push(customer);
+                }
+                window.name = JSON.stringify(model);
+                window.location.href = 'customer-overview.html';
+            });
+
+            var cancelButton = document.getElementById('cancelButton');
+            addEvent(cancelButton, 'click', function(event) {
+                window.location.href = 'customer-overview.html';
+            });
+        };
+
+    </script>
+
+</head>
+<body>
+
+<div class="main-content">
+
+    <div class="box">
+        <div class="box-top">
+            <div>&nbsp;</div>
+        </div>
+        <div class="box-content">
+            
+            <h1>Anlegen oder Bearbeiten Kunde</h1>
+            <div id="customerEditForm">
+                <div class="row">
+                    <div class="gu1">&nbsp;</div>
+                    <div class="gu2">
+                        Nr.:
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="gu2">
+                        <input id="nrInputField" type="text" size="100">
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="gu2">
+                        Vorname:
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="gu2">
+                        <input id="firstnameInputField" type="text" size="100">
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="gu2">
+                        Nachname:
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="gu2">
+                        <input id="lastnameInputField" type="text" size="100">
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="gu3_25 alignRight">
+                        <input id="saveButton" type="button" value="Save">
+                        <input id="cancelButton" type="button" value="Cancel">
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="box-bottom">
+            <div>&nbsp;</div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
