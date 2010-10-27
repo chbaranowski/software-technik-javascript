@@ -2,7 +2,6 @@ function FlexTable(parent, columns, model) {
     this.model = model;
     this.parent = parent;
     this.columns = columns;
-    this.setVisible(true);
 };
 
 FlexTable.prototype.setVisible = function(visible) {
@@ -19,7 +18,7 @@ FlexTable.prototype._renderTable = function() {
     if (!this._htmlTable) {
         this._htmlTable = document.createElement('table');
         this._renderHeader();
-        this._renderContent();
+        this.renderContent();
     }
     this.parent.appendChild(this._htmlTable);
 };
@@ -44,11 +43,11 @@ FlexTable.prototype._renderHeader = function() {
 FlexTable.prototype._appendTextColumn = function(tr, text) {
     var td = document.createElement('td');
     var columnTextNode = document.createTextNode(text);
-    td.appendChild(columnTextNode)
+    td.appendChild(columnTextNode);
     tr.appendChild(td);
 };
 
-FlexTable.prototype._renderContent = function() {
+FlexTable.prototype.renderContent = function() {
     var tbody = document.createElement('tbody');
     for (var row = 0; row < this.model.length; row++) {
         var rowModel = this.model[row];
@@ -70,19 +69,23 @@ FlexTable.prototype._renderContent = function() {
 FlexTable.prototype._appendLinks = function(tbody, tr, rowIndex) {
     var that = this;
     var td = document.createElement('td');
-    var editLink = this._createLink(td, 'editLinkClass', 'Edit');
-    var whiteSpaceTextNode = document.createTextNode(' ');
-    td.appendChild(whiteSpaceTextNode);
-    var removeLink = this._createLink(td, 'removeLinkClass', 'Remove');
-    tr.appendChild(td);
-    addEvent(editLink, 'click', function() {
-        that.onEditClick(rowIndex);
-    });
-    addEvent(removeLink, 'click', function() {
-        that.model.splice(rowIndex, 1);
-        that._renderContent();
-        that.save();
-    });
+    if(that.onEditClick){
+	    var editLink = this._createLink(td, 'editLinkClass', 'Edit');
+	    var whiteSpaceTextNode = document.createTextNode(' ');
+	    td.appendChild(whiteSpaceTextNode);
+	    addEvent(editLink, 'click', function() {
+	        that.onEditClick(rowIndex);
+	    });
+    }
+    if(that.onRemoveClick){
+	    var removeLink = this._createLink(td, 'removeLinkClass', 'Remove');
+	    tr.appendChild(td);
+	    addEvent(removeLink, 'click', function() {
+	        var model = that.model.splice(rowIndex, 1);
+	        that.renderContent();
+	        that.onRemoveClick(rowIndex, model[0]);
+	    });
+    }
 };
 
 FlexTable.prototype._createLink = function(parent, cssClass, text) {
@@ -95,10 +98,3 @@ FlexTable.prototype._createLink = function(parent, cssClass, text) {
     return a;
 };
 
-FlexTable.prototype.onEditClick = function(rowIndex, model) {
-
-};
-
-FlexTable.prototype.save = function() {
-  window.name = JSON.stringify(model);  
-};

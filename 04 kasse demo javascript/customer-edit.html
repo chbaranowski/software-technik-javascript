@@ -6,125 +6,86 @@
 
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 
-    <script type="text/javascript" src="javascript/event.js"></script>
-
     <script type="text/javascript" src="javascript/utils.js"></script>
-
-    <script type="text/javascript">
-
-
-        window.onload = function() {
-            var model;
-            if (window.name) {
-                model = JSON.parse(window.name);
-            }
-            else {
-                model = [
-                    [1, 'Baranowski', 'Christian'],
-                    [2, 'Tester', 'Christian']
-                ];
-            }
-            ;
-            var parameters = window.location.search;
-            var index = getUrlParam('customerId');
-            var customer;
-            if (index) {
-                customer = model[index];
-            } else {
-                customer = [0, '', ''];
-            }
-
-            var nrInputField = document.getElementById('nrInputField');
-            nrInputField.value = customer[0];
-
-            var firstnameInputField = document.getElementById('firstnameInputField');
-            firstnameInputField.value = customer[1];
-
-            var lastnameInputField = document.getElementById('lastnameInputField');
-            lastnameInputField.value = customer[2];
-
-            var saveButton = document.getElementById('saveButton');
-            addEvent(saveButton, 'click', function(event) {
-                customer[0] = nrInputField.value;
-                customer[1] = firstnameInputField.value;
-                customer[2] = lastnameInputField.value;
-                if(!index){
-                    model.push(customer);
-                }
-                window.name = JSON.stringify(model);
-                window.location.href = 'customer-overview.html';
-            });
-
-            var cancelButton = document.getElementById('cancelButton');
-            addEvent(cancelButton, 'click', function(event) {
-                window.location.href = 'customer-overview.html';
-            });
-        };
-
-    </script>
-
+    <script type="text/javascript" src="javascript/FlexTable.js"></script>
+    <script type="text/javascript" src="javascript/CustomerEdit.js"></script>
 </head>
 <body>
 
-<div class="main-content">
-
-    <div class="box">
-        <div class="box-top">
-            <div>&nbsp;</div>
-        </div>
-        <div class="box-content">
-            
-            <h1>Anlegen oder Bearbeiten Kunde</h1>
-            <div id="customerEditForm">
-                <div class="row">
-                    <div class="gu1">&nbsp;</div>
-                    <div class="gu2">
-                        Nr.:
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="gu2">
-                        <input id="nrInputField" type="text" size="100">
-                    </div>
-                </div>
+    <div class="main-content">
     
-                <div class="row">
-                    <div class="gu2">
-                        Vorname:
+        <div id="content">
+        
+        <div class="shadow-container">
+            <div class="shadow1">
+                <div class="shadow2">
+                    <div class="shadow3">
+                        <div class="container">
+                             <h1>Kunde anlegen / bearbeiten</h1>
+                             <form action="post">
+                                <div class="row">
+                                    <div class="col gu_05">&nbsp;</div>
+                                    <div class="col gu3">
+                                        Basar Nummer:
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col gu_05">&nbsp;</div>
+                                    <div class="col gu3">
+                                        <input id="nrInputField" class="textField" type="text" name="SampleTestField" value="">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    &nbsp;
+                                </div>
+                                <div class="row">
+                                    <div class="col gu_05">&nbsp;</div>
+                                    <div class="col gu3">
+                                        Vorname:
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col gu_05">&nbsp;</div>
+                                    <div class="col gu3">
+                                        <input id="firstnameInputField" class="textField" type="text" name="SampleTestField" value="">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    &nbsp;
+                                </div>
+                                  <div class="row">
+                                    <div class="col gu_05">&nbsp;</div>
+                                    <div class="col gu3">
+                                       Nachname:
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col gu_05">&nbsp;</div>
+                                    <div class="col gu3">
+                                        <input id="lastnameInputField" class="textField" type="text" name="SampleTestField" value="">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    &nbsp;
+                                </div>
+                                <div class="row">
+                                    <div class="col gu_05">&nbsp;</div>
+                                    <div class="col gu1">
+                                        <input id="saveButton" type="button" name="SampleButton" value="Speichern">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    &nbsp;
+                                </div>
+                            </form>
+                      </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="gu2">
-                        <input id="firstnameInputField" type="text" size="100">
-                    </div>
-                </div>
-    
-                <div class="row">
-                    <div class="gu2">
-                        Nachname:
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="gu2">
-                        <input id="lastnameInputField" type="text" size="100">
-                    </div>
-                </div>
-    
-                <div class="row">
-                    <div class="gu3_25 alignRight">
-                        <input id="saveButton" type="button" value="Save">
-                        <input id="cancelButton" type="button" value="Cancel">
-                    </div>
-                </div>
-                
             </div>
         </div>
-        <div class="box-bottom">
-            <div>&nbsp;</div>
-        </div>
+        
     </div>
 
 </div>
-
 </body>
 </html>
