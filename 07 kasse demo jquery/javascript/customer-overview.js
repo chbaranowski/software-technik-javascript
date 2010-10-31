@@ -1,31 +1,47 @@
+// statt window onload nutzen wir hier die JQuery Abstraktion
 $(document).ready(function() {
+	// Die Implementierung des Objekts finden Sie in der JavaScript Datei core.js
 	var application = new Application();
 	var customers = application.getCustomers();
+	
+	// Für jeden Kunden wird eine Tabelle Zeile ausgeben mit einem Link zum bearbeiten 
+	// und löschen.
 	for ( var i = 0; i < customers.length; i++) {
 		function appendRow(customer){
-			var linksColumn = $('<td>');
-			var content = $('<tr>'
+			// Zelle für den bearbeiten und löschen Link.
+			var linksCell = $('<td>');
+			
+			// Via JQuery werden die Zellen für den Customer erstellt.
+			var row = $('<tr>'
 					+ '<td>' + customer.basarNumber + '</td>'
 					+ '<td>' + customer.firstName + '</td>'
-					+ '<td>' + customer.lastName + '</td>').append(linksColumn);
-			linksColumn.append(
+					+ '<td>' + customer.lastName + '</td>').append(linksCell);
+			
+			// Der Link zum bearbeiten wird erstellt und an die Linkzelle angehängt.
+			linksCell.append(
 				$('<a href="customer-edit.html?customerId='
-						+customer.basarNumber 
-						+'">Edit</a>'));
-			linksColumn.append(' ');
-			linksColumn.append($('<a>',{
+						+customer.basarNumber +'">Edit</a>'));
+				
+			// Der Link zum löschen wird erzeugt und es wird ein click handler registiert.
+			linksCell.append($('<a>',{
 				id: 'removeLink:'+customer.basarNumber,
 				text: 'Remove',
 				href: '#',
 				click: function(){
-					$(content).remove();
+					// Die Zeile wird aus dem gelöscht via JQuery.
+					$(row).remove();
 					application.removeCustomer(customer);
 				}
 			}));
-			content.appendTo('#customerTable');
+			
+			// Die dynamisch erzeugte Zeile wird an das HTML Element 
+			// mit der ID customerTable angehängt.
+			row.appendTo('#customerTable');
 		}
+		// Die Methode appendRow erstellt eine neue Tabellezeilen für den Kunden.
 		appendRow(customers[i]);
 	}
+	
 	$('#newCustomerButton').click(function() {
 		window.location.href = 'customer-edit.html';
 	});
