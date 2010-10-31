@@ -23,6 +23,7 @@ $(document).ready(function() {
 	
 	// Via JQuery wird der Click Handler registriert.
 	$('#saveButton').click(function() {
+		
 		// Wenn auf Speichern geklickt wird werden die aktuellen Werte aus
 		// den Eingabefeldern via JQuery gelesen.
 		customer.basarNumber = $('#nrInputField').val();
@@ -30,5 +31,6 @@ $(document).ready(function() {
 		customer.lastName = $('#lastnameInputField').val();
 		application.saveCustomer(customer);
 		window.location.href = 'customer-overview.html';
+	
 	});
 });

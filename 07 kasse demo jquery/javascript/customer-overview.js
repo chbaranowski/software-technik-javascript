@@ -8,14 +8,17 @@ $(document).ready(function() {
 	// und löschen.
 	for ( var i = 0; i < customers.length; i++) {
 		function appendRow(customer){
-			// Zelle für den bearbeiten und löschen Link.
-			var linksCell = $('<td>');
+			// Tabellenzeile für den Kunden wird erstellt
+			var row = $('<tr>');
 			
 			// Via JQuery werden die Zellen für den Customer erstellt.
-			var row = $('<tr>'
-					+ '<td>' + customer.basarNumber + '</td>'
-					+ '<td>' + customer.firstName + '</td>'
-					+ '<td>' + customer.lastName + '</td>').append(linksCell);
+			row.append($('<td>' + customer.basarNumber + '</td>'
+			  + '<td>' + customer.firstName + '</td>'
+			  + '<td>' + customer.lastName + '</td>'));
+			
+			// Zelle für den bearbeiten und löschen Link.
+			var linksCell = $('<td>');
+			row.append(linksCell);
 			
 			// Der Link zum bearbeiten wird erstellt und an die Linkzelle angehängt.
 			linksCell.append(
